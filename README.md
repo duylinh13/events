@@ -34,16 +34,6 @@
 
 ---
 
-## 📁 Project Structure
-event-management-app/
-├── client/ # Frontend (React + MUI)
----
-├── server/ # Backend (Express + TypeScript)
----
-└── README.md
-
----
-
 ## ✨ Features
 
 - Create Event  
