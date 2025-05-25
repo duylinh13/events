@@ -19,34 +19,36 @@
 ## 🧰 Tech Stack
 
 ### 🖼️ Frontend
-- ⚛️ React  
-- ⚡ Vite  
-- 🎨 Material UI  
-- 📡 Axios  
-- 🟦 TypeScript  
+- React  
+- Vite  
+- Material UI  
+- Axios  
+- TypeScript  
 
 ### ⚙️ Backend
-- 🟩 Node.js  
-- 🚂 Express  
-- 🔄 CORS  
-- 🔐 dotenv  
-- 🟦 TypeScript  
+- Node.js  
+- Express  
+- CORS  
+- dotenv  
+- TypeScript  
 
 ---
 
 ## 📁 Project Structure
 event-management-app/
 ├── client/ # Frontend (React + MUI)
+---
 ├── server/ # Backend (Express + TypeScript)
+---
 └── README.md
 
 ---
 
 ## ✨ Features
 
-- 📝 Create Event  
-- 📅 View All Events  
-- 🔄 Update Event  
-- ❌ Delete Event  
-- ⚡ Fast UI with Material UI  
-- 📡 API integration with Axios  
+- Create Event  
+- View All Events  
+- Update Event  
+- Delete Event  
+- Fast UI with Material UI  
+- API integration with Axios  
