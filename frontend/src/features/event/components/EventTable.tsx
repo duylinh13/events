@@ -31,6 +31,12 @@ const HighlightedText: React.FC<{ text: string; query: string }> = ({ text, quer
   );
 };
 
+const isUpcomingEvent = (eventDateStr: string) => {
+  const eventDate = dayjs(eventDateStr);
+  const now = dayjs();
+  return eventDate.isSameOrAfter(now, 'day') && eventDate.diff(now, 'day') <= 3;
+};
+
 interface Props {
   events: Event[];
   onEdit: (event: Event) => void;
@@ -201,6 +207,9 @@ const EventTable: React.FC<Props> = ({ events, onEdit, onDelete }) => {
           columns={columns}
           pagination
           autoPageSize
+          getRowClassName={(params) =>
+            isUpcomingEvent(params.row.date) ? 'upcoming-event-row' : ''
+          }
           sx={{
             '& .MuiDataGrid-columnHeaders': {
               backgroundColor: '#f5f5f5',
@@ -208,6 +217,10 @@ const EventTable: React.FC<Props> = ({ events, onEdit, onDelete }) => {
             },
             '& .MuiDataGrid-cell': {
               whiteSpace: 'nowrap',
+            },
+            // Optional: custom highlight styling
+            '& .upcoming-event-row': {
+              backgroundColor: '#FFF8E1', // vàng nhạt
             },
           }}
         />
