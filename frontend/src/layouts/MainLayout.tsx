@@ -1,19 +1,14 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Container } from '@mui/material';
+import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
 const MainLayout: React.FC = () => {
   return (
-    <>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">Event Manager</Typography>
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth="md" sx={{ mt: 4 }}>
+    <Box>
+      <Box sx={{ flex: 1, px: 2, py: 2 }}>
         <Outlet />
-      </Container>
-    </>
+      </Box>
+    </Box>
   );
 };
 
