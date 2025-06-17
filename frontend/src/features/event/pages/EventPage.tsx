@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import { Typography, Button, Box, Paper } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import EventIcon from '@mui/icons-material/Event';
 import { getEvents, createEvent, updateEvent, deleteEvent } from '../services/eventApi';
 import type { Event } from '../types';
-import EventCard from '../components/EventCard';
 import EventForm from '../components/EventForm';
+import EventTable from '../components/EventTable';
 
 const EventPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -33,7 +35,7 @@ const EventPage: React.FC = () => {
       setFormData({
         title: event.title,
         description: event.description || '',
-        date: event.date.slice(0, 10),
+        date: event.date.slice(0, 9),
         location: event.location || '',
       });
     } else {
@@ -77,18 +79,46 @@ const EventPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Event Management
-      </Typography>
-      <Button variant="contained" onClick={() => handleOpen()}>
-        Add Event
-      </Button>
-      <Box mt={3}>
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} onEdit={handleOpen} onDelete={handleDelete} />
-        ))}
-      </Box>
+    <Box>
+      <Paper>
+        <Box display="flex" justifyContent="space-between" alignItems="center" my={2}>
+          <Typography
+            variant="h5"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 'bold',
+              color: '#388e3c',
+            }}
+          >
+            <EventIcon sx={{ mr: 1 }} />
+            Event Management
+          </Typography>
+
+          <Button
+            variant="contained"
+            startIcon={<AddCircleIcon />}
+            onClick={() => handleOpen()}
+            sx={{
+              bgcolor: '#388e3c',
+              fontWeight: 'bold',
+              px: 2.5,
+              py: 1.2,
+              borderRadius: 2,
+              '&:hover': {
+                bgcolor: '#2e7d32',
+              },
+            }}
+          >
+            Add Event
+          </Button>
+        </Box>
+
+        <Box>
+          <EventTable events={events} onEdit={handleOpen} onDelete={handleDelete} />
+        </Box>
+      </Paper>
+
       <EventForm
         open={open}
         title={formData.title}
@@ -100,7 +130,7 @@ const EventPage: React.FC = () => {
         onChange={handleChange}
         onSave={handleSave}
       />
-    </Container>
+    </Box>
   );
 };
 

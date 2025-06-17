@@ -6,7 +6,13 @@ import {
   DialogActions,
   Button,
   TextField,
+  Box,
+  Stack,
 } from '@mui/material';
+import EventIcon from '@mui/icons-material/Event';
+import DescriptionIcon from '@mui/icons-material/Description';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 interface Props {
   open: boolean;
@@ -20,6 +26,49 @@ interface Props {
   onSave: () => void;
 }
 
+// Component mỗi hàng input
+const InputRow = ({
+  icon,
+  label,
+  type = 'text',
+  value,
+  onChange,
+}: {
+  icon: React.ReactElement;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => (
+  <Stack direction="row" spacing={2} alignItems="flex-start" my={2}>
+    <Box sx={{ mt: 2, color: 'primary.main' }}>{icon}</Box>
+    <TextField
+      fullWidth
+      label={label}
+      variant="outlined"
+      type={type}
+      value={value}
+      onChange={onChange}
+      margin="dense"
+      slotProps={{
+        inputLabel: type === 'date' ? { shrink: true } : undefined,
+      }}
+      sx={{
+        '& input': {
+          pt: type === 'date' ? 1.5 : 2,
+          pb: type === 'date' ? 1.5 : 1,
+        },
+        '& label': {
+          zIndex: 1,
+          background: 'white',
+          px: 0.5,
+          ml: 0.5,
+        },
+      }}
+    />
+  </Stack>
+);
+
 const EventForm: React.FC<Props> = ({
   open,
   title,
@@ -32,43 +81,64 @@ const EventForm: React.FC<Props> = ({
   onSave,
 }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{isEditing ? 'Edit Event' : 'Add Event'}</DialogTitle>
-      <DialogContent>
-        <TextField
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle
+        sx={{
+          fontWeight: 'bold',
+          bgcolor: '#26a69a', // teal nhẹ
+          color: 'white',
+
+          px: 3,
+          fontSize: '1.25rem',
+        }}
+      >
+        {isEditing ? 'Edit Event' : 'Add New Event'}
+      </DialogTitle>
+
+      <DialogContent sx={{ px: 3, py: 3 }}>
+        <InputRow
+          icon={<EventIcon />}
           label="Title"
-          fullWidth
-          margin="dense"
           value={title}
           onChange={(e) => onChange('title', e.target.value)}
         />
-        <TextField
+        <InputRow
+          icon={<DescriptionIcon />}
           label="Description"
-          fullWidth
-          margin="dense"
           value={description}
           onChange={(e) => onChange('description', e.target.value)}
         />
-        <TextField
+        <InputRow
+          icon={<CalendarTodayIcon />}
           label="Date"
           type="date"
-          fullWidth
-          margin="dense"
           value={date}
           onChange={(e) => onChange('date', e.target.value)}
-          InputLabelProps={{ shrink: true }}
         />
-        <TextField
+        <InputRow
+          icon={<LocationOnIcon />}
           label="Location"
-          fullWidth
-          margin="dense"
           value={location}
           onChange={(e) => onChange('location', e.target.value)}
         />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onSave} variant="contained">
+
+      <DialogActions sx={{ px: 3, py: 2 }}>
+        <Button onClick={onClose} color="inherit">
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            bgcolor: '#26a69a',
+            fontWeight: 600,
+            px: 3,
+            '&:hover': {
+              bgcolor: '#1e8887',
+            },
+          }}
+          onClick={onSave}
+        >
           {isEditing ? 'Update' : 'Create'}
         </Button>
       </DialogActions>
